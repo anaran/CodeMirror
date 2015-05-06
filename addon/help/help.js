@@ -33,9 +33,6 @@
                      // Perhaps this is due to readOnly clearing undo history?
                      addToHistory: true,
                      readOnly: true });
-      console.log('doc', doc);
-      console.log(doc.getAllMarks());
-      // buffers[name].cm.readOnly = true;
       sel.add(optHelp, null);
     });
     var optEditor = document.createElement('option');
@@ -45,12 +42,11 @@
       var name = sel.options[sel.selectedIndex].value;
       var buf = buffers[name];
       var old = cm.swapDoc(buf);
-      console.log(old);
     });
     wrap.parentElement.appendChild(sel);
-    console.log(sel);
+    var old = cm.swapDoc(buffers[sel.value]);
     if (!buffers['Editor']) {
-      buffers['Editor'] = cm.swapDoc(buffers[sel.value]);
+      buffers['Editor'] = old;
     }
   };
   var getCommandsHelp = function(cm) {
@@ -58,7 +54,6 @@
       return JSON.stringify(Object.keys(CodeMirror.commands).sort(), null, 2);
     }
     catch (ex) {
-      console.exception(ex);
       return JSON.stringify(ex, Object.getOwnPropertyNames(ex), 2);
     }
   };
@@ -67,7 +62,6 @@
       return JSON.stringify(CodeMirror.defaults, Object.keys(CodeMirror.defaults).sort(), 2);
     }
     catch (ex) {
-      console.exception(ex);
       return JSON.stringify(ex, Object.getOwnPropertyNames(ex), 2);
     }
   };
@@ -82,7 +76,6 @@
       return keyMapHelp;
     }
     catch (ex) {
-      console.exception(ex);
       return JSON.stringify(ex, Object.getOwnPropertyNames(ex), 2);
     }
   };
@@ -91,7 +84,6 @@
       return JSON.stringify(cm.options, Object.keys(cm.options).sort(), 2);
     }
     catch (ex) {
-      console.exception(ex);
       return JSON.stringify(ex, Object.getOwnPropertyNames(ex), 2);
     }
   };
@@ -106,7 +98,6 @@
     setupHelpTypes(cm, { '*commands Help*': getCommandsHelp(cm) });
   };
   CodeMirror.commands.defaultsHelp = function (cm) {
-    console.log(getDefaultsHelp(cm));
     setupHelpTypes(cm, { '*defaults Help*': getDefaultsHelp(cm) });
   };
   CodeMirror.commands.keyMapHelp = function (cm) {

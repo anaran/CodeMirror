@@ -68,10 +68,9 @@
   var getKeyMapHelp = function(cm) {
     try {
       var keyMapName = cm.getOption('keyMap');
-      // var keyMapFallthrough = CodeMirror.keyMap[keyMapName].fallthrough;
-      var keyMapHelp = JSON.stringify(CodeMirror.keyMap[keyMapName], Object.keys(CodeMirror.keyMap[keyMapName]).sort(), 2);
+      var keyMapHelp = JSON.stringify(keyMapName) + ': ' + JSON.stringify(CodeMirror.keyMap[keyMapName], Object.keys(CodeMirror.keyMap[keyMapName]).sort(), 2);
       while (keyMapName = CodeMirror.keyMap[keyMapName].fallthrough) {
-        keyMapHelp += '\n' + JSON.stringify(CodeMirror.keyMap[keyMapName], Object.keys(CodeMirror.keyMap[keyMapName]).sort(), 2);
+        keyMapHelp += ',\n' + JSON.stringify(keyMapName) + ': ' + JSON.stringify(CodeMirror.keyMap[keyMapName], Object.keys(CodeMirror.keyMap[keyMapName]).sort(), 2);
       }
       return keyMapHelp;
     }

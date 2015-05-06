@@ -12,6 +12,10 @@
 <script src="../mode/javascript/javascript.js"></script>
 <script src="../mode/css/css.js"></script>
 <script src="../mode/htmlmixed/htmlmixed.js"></script>
+<script src="../addon/help/help.js"></script>
+<script src="../keymap/vim"></script>
+<script src="../keymap/emacs"></script>
+<script src="../keymap/sublime"></script>
 <style type="text/css">
       .CodeMirror {border-top: 1px solid #888; border-bottom: 1px solid #888;}
     </style>
@@ -32,18 +36,18 @@
 <h2>Help Demo</h2>
 <h3>Pick keyMap</h3>
 <div>
-<button>default</button>
-<button>Emacs</button>
-<button>Sublime</button>
-<button>vim</button>
+<button class="keyMap" id="default">default</button>
+<button class="keyMap" id="emacs">Emacs</button>
+<button class="keyMap" id="sublime">Sublime</button>
+<button class="keyMap" id="vim">vim</button>
 </div>
 <h3>Get Help in Buffers</h3>
 <div>
-<button>All below</button>
-<button>Commands</button>
-<button>Defaults</button>
-<button>KeyMap</button>
-<button>Options</button>
+<button class="help" id="allHelp">All below</button>
+<button class="help" id="commandsHelp">Commands</button>
+<button class="help" id="defaultsHelp">Defaults</button>
+<button class="help" id="keyMapHelp">KeyMap</button>
+<button class="help" id="optionsHelp">Options</button>
 </div>
 <form><textarea id="code" name="code"><html</textarea></form>
 
@@ -52,5 +56,17 @@
         mode: 'text/html',
         autoCloseTags: true
       });
+      Array.prototype.forEach.call(document.querySelectorAll('button.keyMap'),
+                                  function(button) {
+                                    button.onclick = function(event) {
+                                    editor.setOption('keyMap', event.target.id);
+                                    }
+                                  });
+      Array.prototype.forEach.call(document.querySelectorAll('button.help'),
+                                  function(button) {
+                                    button.onclick = function(event) {
+                                    editor.execCommand(event.target.id);
+                                    }
+                                  });
     </script>
   </article>

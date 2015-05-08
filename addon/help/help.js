@@ -43,6 +43,13 @@
       var buf = buffers[name];
       var old = cm.swapDoc(buf);
     });
+    // Added for testing, since change is not emitted by programmatic
+    // sel.value change, even with focus before and blur after.
+    CodeMirror.on(sel, 'click', function () {
+      var name = sel.options[sel.selectedIndex].value;
+      var buf = buffers[name];
+      var old = cm.swapDoc(buf);
+    });
     wrap.parentElement.appendChild(sel);
     var old = cm.swapDoc(buffers[sel.value]);
     if (!buffers['Editor']) {
